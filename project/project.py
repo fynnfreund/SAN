@@ -56,7 +56,7 @@ Go to Settings to manage user administrator options.
 
     def UAC4(self):
         msg = QMessageBox()
-        msg.setIcon(QMessageBox.Information)
+        msg.setIcon(QMessageBox.Critical)
         msg.setText("User Account Control")
         msg.setInformativeText("Windows does not recommend to run this app.")
         msg.setWindowTitle("User Account Control")
@@ -133,6 +133,7 @@ Good luck!
             } 
         """)
         self.settings.move(10, 500)
+        self.settings.clicked.connect(self.Settings) 
 
         self.explorer = QPushButton(self)
         self.explorer.resize(17, 17)
