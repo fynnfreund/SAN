@@ -1,34 +1,94 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import Qt
+from settings import *
 import sys
 
 class MyWindow(QWidget):
     def __init__(self):
         super(MyWindow, self).__init__()
         self.initGUI()
-    
-    def UAC(self):
-        choice = QMessageBox.information(self, 'User Account Control',
-                                     "Do you want to allow the program from an unkown publisher to make changes to this computer?", QMessageBox.Yes |
-                                     QMessageBox.No, QMessageBox.No)
-        if choice == QMessageBox.Yes:
-            return NoAccess(self) 
-        else:
-            pass
 
     def NoAccess(self):
-        choice = QMessageBox.critical(self, 'Access Denied',
-                                     """Access is denied. 
+        msg = QMessageBox()
+        msg.setIcon(QMessageBox.Critical)
+        msg.setWindowTitle("Access Denied")
+        msg.setText("Access is denied.")
+        msg.setInformativeText("""
+You require permission from the computer's administrator to make changes to this program. 
+Go to Settings to manage user administrator options.
+""")
+        msg.setStandardButtons(QMessageBox.Ok)
+        msg.exec_()
 
-You require permissioin from the computer's administrator to make changes to this folder. 
-                                        
-Go to 'Settings' to manage user permission control.""" , QMessageBox.Ok)
-        if choice == QMessageBox.Yes:
-            print('quit application')
-            sys.exit()
-        else:
-            pass       
-        
+
+    def UAC(self):
+        msg = QMessageBox()
+        msg.setIcon(QMessageBox.Information)
+        msg.setText("User Account Control")
+        msg.setInformativeText("Do you want to allow the program from an unkown publisher to make changes to this computer?")
+        msg.setWindowTitle("User Account Control")
+        msg.setDetailedText("User Account Control helps prevent potentially harmful programs from making changes to your computer. (We at Windows think the user is stupid.) ")
+        msg.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+        msg.buttonClicked.connect(self.NoAccess)
+        msg.exec_()
+
+    def UAC2(self):
+        msg = QMessageBox()
+        msg.setIcon(QMessageBox.Information)
+        msg.setText("User Account Control")
+        msg.setInformativeText("Do you really want to run this app?")
+        msg.setWindowTitle("User Account Control")
+        msg.setDetailedText("User Account Control helps prevent potentially harmful programs from making changes to your computer. (We at Windows think the user is stupid.) ")
+        msg.setStandardButtons(QMessageBox.Yes)
+        msg.buttonClicked.connect(self.UAC3)
+        msg.exec_()
+
+    def UAC3(self):
+        msg = QMessageBox()
+        msg.setIcon(QMessageBox.Information)
+        msg.setText("User Account Control")
+        msg.setInformativeText("Are you sure?")
+        msg.setWindowTitle("User Account Control")
+        msg.setDetailedText("User Account Control helps prevent potentially harmful programs from making changes to your computer. (We at Windows think the user is stupid.) ")
+        msg.setStandardButtons(QMessageBox.Yes)
+        msg.buttonClicked.connect(self.UAC4)
+        msg.exec_()
+
+    def UAC4(self):
+        msg = QMessageBox()
+        msg.setIcon(QMessageBox.Information)
+        msg.setText("User Account Control")
+        msg.setInformativeText("Windows does not recommend to run this app.")
+        msg.setWindowTitle("User Account Control")
+        msg.setDetailedText("User Account Control helps prevent potentially harmful programs from making changes to your computer. (We at Windows think the user is stupid.) ")
+        msg.setStandardButtons(QMessageBox.Ok)
+        msg.exec_()
+
+    def Blocked(self):
+        msg = QMessageBox()
+        msg.setIcon(QMessageBox.Critical)
+        msg.setText("This app has been blocked for you protection.")
+        msg.setInformativeText("""
+An administrator has blocked you from running this app. 
+For more information, contact the administrator:
+www.windows.com
+Good luck! 
+""")
+        msg.setStandardButtons(QMessageBox.Close)
+        msg.exec_()
+    
+    def ShutDown(self):
+        msg = QMessageBox()
+        msg.setIcon(QMessageBox.Question)
+        msg.setWindowTitle("Windows Update")
+        msg.setText("Your PC needs to finsish intstalling updates before shutting down.")
+        msg.setInformativeText("Would you like to wait?")
+        msg.setStandardButtons(QMessageBox.Yes)
+        msg.exec_()
+
+    def Settings(self):
+        self.win = MyMainWindow()
+
 
     def initGUI(self):
         self.setGeometry(0, 30, 1000, 600)
@@ -56,6 +116,7 @@ Go to 'Settings' to manage user permission control.""" , QMessageBox.Ok)
             } 
         """)
         self.powerbutton.move(10, 550)
+        self.powerbutton.clicked.connect(self.ShutDown)
 
         self.settings = QPushButton(self)
         self.settings.resize(17, 17)
@@ -152,6 +213,7 @@ Go to 'Settings' to manage user permission control.""" , QMessageBox.Ok)
 
         """)
         self.tile13.move(420, 30)
+        self.tile13.clicked.connect(self.UAC2)
 
         self.header2 = QLabel(self)
         self.header2.setText("Office")
@@ -178,6 +240,7 @@ Go to 'Settings' to manage user permission control.""" , QMessageBox.Ok)
             }
         """)
         self.tile21.move(200, 170)
+        self.tile21.clicked.connect(self.Blocked)
 
         self.tile22 = QPushButton(self)
         self.tile22.resize(100, 100)
@@ -195,6 +258,7 @@ Go to 'Settings' to manage user permission control.""" , QMessageBox.Ok)
             }
         """)
         self.tile22.move(310, 170)
+        self.tile22.clicked.connect(self.NoAccess)
 
         self.tile23 = QPushButton(self)
         self.tile23.resize(100, 100)
@@ -212,6 +276,7 @@ Go to 'Settings' to manage user permission control.""" , QMessageBox.Ok)
             }
         """)
         self.tile23.move(420, 170)
+        self.tile23.clicked.connect(self.NoAccess)
 
         self.tile24 = QPushButton(self)
         self.tile24.resize(100, 100)
@@ -229,6 +294,7 @@ Go to 'Settings' to manage user permission control.""" , QMessageBox.Ok)
             }
         """)
         self.tile24.move(200, 280)
+        self.tile24.clicked.connect(self.Blocked)
 
         self.tile25 = QPushButton(self)
         self.tile25.resize(100, 100)
@@ -246,6 +312,7 @@ Go to 'Settings' to manage user permission control.""" , QMessageBox.Ok)
             }
         """)
         self.tile25.move(310, 280)
+        self.tile25.clicked.connect(self.UAC)        
 
         self.tile26 = QPushButton(self)
         self.tile26.resize(100, 100)
@@ -263,7 +330,7 @@ Go to 'Settings' to manage user permission control.""" , QMessageBox.Ok)
             }
         """)
         self.tile26.move(420, 280)
-
+        self.tile26.clicked.connect(self.UAC2)    
 
 
         self.header3 = QLabel(self)
@@ -291,7 +358,7 @@ Go to 'Settings' to manage user permission control.""" , QMessageBox.Ok)
             }            
         """)
         self.tile31.move(560, 30)
-
+        self.tile31.clicked.connect(self.Blocked)    
 
         self.tile32 = QPushButton(self)
         self.tile32.resize(100, 100)
@@ -309,6 +376,7 @@ Go to 'Settings' to manage user permission control.""" , QMessageBox.Ok)
             }            
         """)
         self.tile32.move(670, 30)
+        self.tile32.clicked.connect(self.UAC) 
 
         self.tile33 = QPushButton(self)
         self.tile33.resize(100, 100)
@@ -326,7 +394,7 @@ Go to 'Settings' to manage user permission control.""" , QMessageBox.Ok)
             }            
         """)
         self.tile33.move(780, 30)
-
+        self.tile33.clicked.connect(self.NoAccess) 
 
         self.header4 = QLabel(self)
         self.header4.setText("System")
@@ -353,6 +421,7 @@ Go to 'Settings' to manage user permission control.""" , QMessageBox.Ok)
             }            
         """)
         self.tile41.move(560, 170)
+        self.tile41.clicked.connect(self.Settings) 
 
         self.tile42 = QPushButton(self)
         self.tile42.resize(100, 100)
@@ -370,6 +439,7 @@ Go to 'Settings' to manage user permission control.""" , QMessageBox.Ok)
             }            
         """)
         self.tile42.move(670, 170)
+        self.tile42.clicked.connect(self.NoAccess) 
 
         self.tile43 = QPushButton(self)
         self.tile43.resize(100, 100)
@@ -387,7 +457,7 @@ Go to 'Settings' to manage user permission control.""" , QMessageBox.Ok)
             }            
         """)
         self.tile43.move(780, 170)
-
+        self.tile43.clicked.connect(self.NoAccess) 
 
         self.listwidget = QListWidget(self)
         self.listwidget.addItem("A")

@@ -4,18 +4,32 @@ import sys
 
 def window():
    app = QApplication(sys.argv)
-   win = QWidget()
-   grid = QGridLayout()
+   w = QWidget()
+   b = QPushButton(w)
+   b.setText("Show message!")
 
-   for i in range(1,5):
-      for j in range(1,5):
-         grid.addWidget(QPushButton("B"+str(i)+str(j)),i,j)
-
-   win.setLayout(grid)
-   win.setGeometry(100,100,200,100)
-   win.setWindowTitle("PyQt")
-   win.show()
+   b.move(50,50)
+   b.clicked.connect(showdialog)
+   w.setWindowTitle("PyQt Dialog demo")
+   w.show()
    sys.exit(app.exec_())
+	
+def showdialog():
+   msg = QMessageBox()
+   msg.setIcon(QMessageBox.Information)
 
-if __name__ == '__main__':
+   msg.setText("This is a message box")
+   msg.setInformativeText("This is additional information")
+   msg.setWindowTitle("MessageBox demo")
+   msg.setDetailedText("The details are as follows:")
+   msg.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
+   msg.buttonClicked.connect(msgbtn)
+	
+   retval = msg.exec_()
+   print "value of pressed message box button:", retval
+	
+def msgbtn():
+   print "hurray!"
+	
+if __name__ == '__main__': 
    window()
