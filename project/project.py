@@ -1,5 +1,6 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import Qt
+from PyQt5.QtMultimedia import QSound
 from settings import *
 import sys
 
@@ -89,10 +90,13 @@ Good luck!
     def Settings(self):
         self.win = MyMainWindow()
 
+    def SoundPlay(self):
+        self.sound = QSound("sounds/pushme.wav")
+        self.sound.play()
 
     def initGUI(self):
         self.setGeometry(0, 30, 1000, 600)
-        self.setWindowTitle("version01")
+        self.setWindowTitle("Start Menu")
         self.setObjectName("main")
         self.setStyleSheet("""
          QWidget#main {
@@ -150,6 +154,7 @@ Good luck!
             } 
         """)
         self.explorer.move(10, 450)
+        self.explorer.clicked.connect(self.SoundPlay)
 
         self.header1 = QLabel(self)
         self.header1.setText("Leisure")
@@ -460,24 +465,21 @@ Good luck!
         self.tile43.move(780, 170)
         self.tile43.clicked.connect(self.NoAccess) 
 
+        self.header5 = QLabel(self)
+        self.header5.setText("All Applications")
+        self.header5.setStyleSheet("""
+            QLabel {
+            color: #D9D9D9
+        }
+        """)
+        self.header5.move(45, 10)
+
         self.listwidget = QListWidget(self)
         self.listwidget.addItem("A")
         self.listwidget.addItem("Access 2016")
-        self.listwidget.addItem("Acrobat Reader DC")
-        self.listwidget.addItem("Adobe Bridge CC")
-        self.listwidget.addItem("Adobe Creative Cloud")
-        self.listwidget.addItem("Adobe Media Endocer CC")
-        self.listwidget.addItem("Adobe Photoshop CC")
-        self.listwidget.addItem("Alarm & Clock")
-        self.listwidget.addItem("Anaconda2")
-        self.listwidget.addItem("Arduino")
-        self.listwidget.addItem("Audacity")
-        self.listwidget.addItem("Access 2016")
-        self.listwidget.addItem("Acrobat Reader DC")
-        self.listwidget.addItem("Adobe Bridge CC")
-        self.listwidget.addItem("Adobe Creative Cloud")
-        self.listwidget.addItem("Adobe Media Endocer CC")
-        self.listwidget.addItem("Adobe Photoshop CC")
+        self.listwidget.addItem("Acrobat Reader")
+        self.listwidget.addItem("Adobe Bridge")
+        self.listwidget.addItem("Adobe Photoshop")
         self.listwidget.addItem("Alarm & Clock")
         self.listwidget.addItem("Anaconda2")
         self.listwidget.addItem("Arduino")
@@ -485,6 +487,51 @@ Good luck!
         self.listwidget.addItem("")
         self.listwidget.addItem("B")
         self.listwidget.addItem("Blender")
+        self.listwidget.addItem("")
+        self.listwidget.addItem("C")
+        self.listwidget.addItem("Calender")
+        self.listwidget.addItem("Camera")
+        self.listwidget.addItem("Canon Utilities")
+        self.listwidget.addItem("Cortana")
+        self.listwidget.addItem("Cubase")
+        self.listwidget.addItem("")
+        self.listwidget.addItem("D")
+        self.listwidget.addItem("Dropbox")
+        self.listwidget.addItem("")
+        self.listwidget.addItem("E")
+        self.listwidget.addItem("Excel")
+        self.listwidget.addItem("")
+        self.listwidget.addItem("F")
+        self.listwidget.addItem("Feedback-Hub")
+        self.listwidget.addItem("")
+        self.listwidget.addItem("G")
+        self.listwidget.addItem("Github")
+        self.listwidget.addItem("Google Chrome")
+        self.listwidget.addItem("Groove-Music")
+        self.listwidget.addItem("")
+        self.listwidget.addItem("M")
+        self.listwidget.addItem("Mail")
+        self.listwidget.addItem("Microsoft Edge")
+        self.listwidget.addItem("Mozilla Firefox")
+        self.listwidget.addItem("")
+        self.listwidget.addItem("N")
+        self.listwidget.addItem("Netflix")
+        self.listwidget.addItem("News")
+        self.listwidget.addItem("")
+        self.listwidget.addItem("O")
+        self.listwidget.addItem("OneNote")
+        self.listwidget.addItem("")
+        self.listwidget.addItem("P")
+        self.listwidget.addItem("PowerPoint")
+        self.listwidget.addItem("")
+        self.listwidget.addItem("S")
+        self.listwidget.addItem("Spotify")
+        self.listwidget.addItem("Sway")
+        self.listwidget.addItem("")
+        self.listwidget.addItem("W")
+        self.listwidget.addItem("Word")
+
+
         self.listwidget.setStyleSheet("""
             QListWidget {
             font-family: "Monaco", "Andale Mono", monospace;
@@ -492,11 +539,16 @@ Good luck!
             color: #D9D9D9;
             background-color: #191919
             }
-
+            QScrollBar:vertical {
+            border: 2px solid white;
+            background: solid black;
+            width: 40px;
+            margin: 60px 0 0 0
+            }
         """)
-        #self.listwidget.setSelectionMode(QAbstractItemView.MultiSelection)
-        self.listwidget.resize(120, 400)
+        self.listwidget.resize(150, 570)
         self.listwidget.move(40, 30)
+
         self.show()
 
 if __name__ == "__main__":

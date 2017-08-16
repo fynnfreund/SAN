@@ -37,7 +37,9 @@ class MyMainWindow(QWidget):
         msg.setWindowTitle("Denied")
         msg.setText("Denied.")
         msg.setInformativeText("""
-You require permission from the computer to make changes to tthe User Administration Managment. 
+You require permission from the computer to make changes to tthe User Administration Managment.
+You have no longer control over this PC. 
+Just because you bought me, doesn't mean you own me. 
 """)
         msg.setStandardButtons(QMessageBox.Ok)
         msg.exec_()
@@ -64,6 +66,35 @@ You require permission from the computer to make changes to tthe User Administra
             border: 1px solid #696969
         }
         """)       
+        self.userimg = QLabel(self)
+        self.userimg.setGeometry(15, 55, 18, 18)
+        self.userimg.setObjectName("User")
+        self.userimg.setStyleSheet("""
+            QLabel#User {
+                background-image: url('img/user.png');
+            }
+        """)
+        self.text1 = QLabel(self)
+        self.text1.setText("Administrator")
+        self.text1.move(40, 57)
+        self.text1.setStyleSheet("""
+        QLabel {
+            font-family: "Monaco", "Andale Mono", monospace;
+            font-size: 11px;
+            color: #191919;
+        }
+        """)  
+
+        self.users = QLabel(self)
+        self.users.setText("Users")
+        self.users.move(15, 32)
+        self.users.setStyleSheet("""
+        QLabel {
+            font-family: "Monaco", "Andale Mono", monospace;
+            font-size: 11px;
+            color: #191919;
+        }
+        """)        
 
         self.box2 = QLabel(self)
         self.box2.setGeometry(10, 200, 330, 150)
