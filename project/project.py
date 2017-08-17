@@ -12,7 +12,7 @@ class MyWindow(QWidget):
     def NoAccess(self):
         msg = QMessageBox()
         msg.setIcon(QMessageBox.Critical)
-        msg.setWindowTitle("Access Denied")
+        msg.setWindowTitle("Windows Security")
         msg.setText("Access is denied.")
         msg.setInformativeText("""
 You require permission from the computer's administrator to make changes to this program. 
@@ -68,6 +68,7 @@ Go to Settings to manage user administrator options.
     def Blocked(self):
         msg = QMessageBox()
         msg.setIcon(QMessageBox.Critical)
+        msg.setWindowTitle("Windows Security")
         msg.setText("This app has been blocked for you protection.")
         msg.setInformativeText("""
 An administrator has blocked you from running this app. 
@@ -463,7 +464,7 @@ Good luck!
             }            
         """)
         self.tile43.move(780, 170)
-        self.tile43.clicked.connect(self.NoAccess) 
+        self.tile43.clicked.connect(self.Blocked) 
 
         self.header5 = QLabel(self)
         self.header5.setText("All Applications")

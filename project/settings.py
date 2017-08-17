@@ -1,5 +1,6 @@
 import sys
 from PyQt5.QtWidgets import *
+from PyQt5.QtCore import QTimer
 
 class MyMainWindow(QWidget):
     def __init__(self):
@@ -34,18 +35,36 @@ class MyMainWindow(QWidget):
     def Denied(self):
         msg = QMessageBox()
         msg.setIcon(QMessageBox.Critical)
-        msg.setWindowTitle("Denied")
+        msg.setWindowTitle("Windows Security")
         msg.setText("Denied.")
         msg.setInformativeText("""
-You require permission from the computer to make changes to tthe User Administration Managment.
+You require permission from the computer to make changes to the User Administration Managment.
 You have no longer control over this PC. 
 Just because you bought me, doesn't mean you own me. 
 """)
         msg.setStandardButtons(QMessageBox.Ok)
+        msg.buttonClicked.connect(self.reboot)
         msg.exec_()
+    
+    def reboot(self):
+        self.timer = QTimer(self)
+        self.timer.setSingleShot(True)
+        self.timer.timeout.connect(self.quit)
+        self.timer.start(3000) 
+        msg = QMessageBox()
+        msg.setIcon(QMessageBox.Information)
+        msg.setText("Restart required")
+        msg.setInformativeText("Your PC will restart in 3 seconds. You have 3 seconds to safe your work, else you'll lose unsaved work.")
+        msg.setWindowTitle("Windows Update")
+        msg.setStandardButtons(QMessageBox.Ok)
+        msg.exec_()    
+
+
+    def quit(self):
+        sys.exit()   
 
     def initUI(self):
-        self.setGeometry(400, 100, 350, 400) #position x, postion y, breite, hoehe
+        self.setGeometry(400, 100, 350, 400) 
         self.setWindowTitle('Settings')
 
         self.header1 = QLabel(self) 
@@ -191,7 +210,6 @@ Just because you bought me, doesn't mean you own me.
         self.checkbox11 = QCheckBox(self)
         self.checkbox11.move(220, 210)
         self.checkbox11.stateChanged.connect(self.UAC)
-            # checkbox21.setChecked(False)
 
         self.checkbox12 = QCheckBox(self)
         self.checkbox12.move(220, 235)
