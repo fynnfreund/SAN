@@ -83,7 +83,7 @@ Good luck!
         msg = QMessageBox()
         msg.setIcon(QMessageBox.Question)
         msg.setWindowTitle("Windows Update")
-        msg.setText("Your PC needs to finsish intstalling updates before shutting down.")
+        msg.setText("Your PC needs to finish intstalling updates before shutting down.")
         msg.setInformativeText("Would you like to wait?")
         msg.setStandardButtons(QMessageBox.Yes)
         msg.exec_()
